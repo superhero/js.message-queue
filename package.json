@@ -1,0 +1,30 @@
+{
+  "name": "@superhero/core.message-queue",
+  "version": "1.0.0",
+  "description": "A reactive programming model utilizing Redis as a message queue with integrated scheduling capabilities",
+  "repository": "git@github.com:superhero/js.message-queue.git",
+  "license": "MIT",
+  "main": "config.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "@superhero/core.redis": "2.5.9",
+    "superhero": "2.13.7"
+  },
+  "devDependencies": {
+    "chai": "4.3.10",
+    "mocha": "10.2.0"
+  },
+  "mocha": {
+    "require": [
+      "./test/init.js"
+    ],
+    "ui": "bdd",
+    "full-trace": true,
+    "timeout": 5000,
+    "spec": [
+      "./test/**/*.test.js"
+    ]
+  }
+}
