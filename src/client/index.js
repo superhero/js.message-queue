@@ -463,7 +463,6 @@ class MessageQueueClient
   async consume(domain, name, consumer)
   {
     const channel = this.channel.messageIndexed(domain, name)
-    await this.redis.stream.lazyloadConsumerGroup(channel, channel)
     await this.subscriber.pubsub.subscribe(channel, this._consumeOnSubscribe.bind(this, consumer))
   }
 
@@ -471,6 +470,7 @@ class MessageQueueClient
   {
     try
     {
+      await this.redis.stream.lazyloadConsumerGroup(channel, channel)
       while(await this.redis.stream.readGroup(channel, channel, async (id, dto) =>
       {
         const message = await this.readMessage(dto.id)
