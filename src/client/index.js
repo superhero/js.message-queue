@@ -404,7 +404,7 @@ class MessageQueueClient
       const messageLog = await this.readMessageLog(domain, pid)
       await Promise.all(messageLog.map((message) => this.deleteMessage(message.id)))
       const channel = this.channel.messageLog(domain, pid)
-      await this.redis.channel.delete(channel)
+      await this.redis.ordered.delete(channel)
     }
     catch(previousError)
     {
