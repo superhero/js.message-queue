@@ -393,6 +393,30 @@ class MessageQueueClient
     }
   }
 
+  async doesMessageLogExist(domainPattern, pidPattern)
+  {
+    try
+    {
+      const
+        channel = this.channel.messageLog(domainPattern, pidPattern),
+        keys    = this.redis.key.scan(channel)
+
+      for await (const _ of keys) 
+      {
+        return true
+      }
+
+      return false
+    }
+    catch(previousError)
+    {
+      const error = new Error('problem when scanning for message loggs')
+      error.code  = 'E_MESSAGE_QUEUE_CLIENT_DOES_MESSAGE_LOG_EXIST'
+      error.chain = { previousError, domainPattern, pidPattern }
+      throw error
+    }
+  }
+
   /**
    * @param {string} domain
    * @param {string} pid
