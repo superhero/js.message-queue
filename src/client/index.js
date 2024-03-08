@@ -549,7 +549,7 @@ class MessageQueueClient
           session       = this.redis.createSession(),
           timeout_id    = setTimeout(async () => 
           {
-            await session.connection.disconnect()
+            await session.connection.quit()
             const error = new Error('exceptional message triggered')
             error.code  = 'E_MESSAGE_QUEUE_CLIENT_WAIT_TIMEOUT'
             error.chain = { domain, pid, happyPaths, exceptionalPaths, timeout }
@@ -572,7 +572,7 @@ class MessageQueueClient
             {
               clearTimeout(timeout_id)
 
-              await session.connection.disconnect()
+              await session.connection.quit()
               const message = await this.readMessage(dto.id)
 
               if(happyPaths.includes(message.name))
