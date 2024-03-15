@@ -26,13 +26,12 @@ describe('Message queue test suit', () =>
   })
 
   const
-    timestamp = new Date().toJSON(),
-    ppid      = 'test-' + Date.now().toString(32),
-    pid       = 'test-' + Date.now().toString(36),
-    domain    = 'test-domain' + Date.now().toString(36),
-    name      = 'test-event'  + Date.now().toString(36),
-    data      = { test:pid },
-    event     = { timestamp, domain, ppid, pid, name, data }
+    ppid    = 'test-' + Date.now().toString(32),
+    pid     = 'test-' + Date.now().toString(36),
+    domain  = 'test-domain-'  + Date.now().toString(36),
+    name    = 'test-message-' + Date.now().toString(36),
+    data    = { test:pid },
+    event   = { domain, ppid, pid, name, data }
 
   it('consume when a domain event was persisted', function (done)
   {
@@ -42,7 +41,11 @@ describe('Message queue test suit', () =>
     {
       expect(dto.pid).to.equal(pid)
       ++i === 2 && done()
-    }).then(() => client.write(event) && client.write(event))
+    }).then(() => 
+    {
+      client.write(event) 
+      client.write(event)
+    })
   })
 
   it('read the message log', async function ()
@@ -65,6 +68,16 @@ describe('Message queue test suit', () =>
       hasEvent    = await client.hasMessage(messageLog, name)
 
     expect(hasEvent).to.equal(true)
+  })
+
+  it('compose message state', async function ()
+  {
+    const
+      client        = core.locate('message-queue/client'),
+      messageLog    = await client.readMessageLog(domain, pid),
+      messageState  = await client.composeMessageState(messageLog)
+
+    expect(typeof messageState).to.equal('object')
   })
 
   it('can schedule an event to be persisted in the future', function (done)

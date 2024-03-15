@@ -3,13 +3,14 @@
  */
 class MessageQueueClient
 {
-  constructor(console, channel, redis, publisher, subscriber)
+  constructor(console, channel, redis, publisher, subscriber, deepmerge)
   {
     this.console    = console
     this.channel    = channel
     this.redis      = redis
     this.publisher  = publisher
     this.subscriber = subscriber
+    this.deepmerge  = deepmerge
   }
 
   async bootstrap()

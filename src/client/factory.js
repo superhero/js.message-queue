@@ -7,10 +7,11 @@ const
  */
 class ClientFactory
 {
-  constructor(console, channel)
+  constructor(console, channel, deepmerge)
   {
-    this.console  = console
-    this.channel  = channel
+    this.console    = console
+    this.channel    = channel
+    this.deepmerge  = deepmerge
   }
 
   /**
@@ -24,7 +25,7 @@ class ClientFactory
       publisher     = redis.createSession(),
       subscriber    = redis.createSession()
 
-    return new MessageQueueClient(this.console, this.channel, redis, publisher, subscriber)
+    return new MessageQueueClient(this.console, this.channel, redis, publisher, subscriber, this.deepmerge)
   }
 }
 

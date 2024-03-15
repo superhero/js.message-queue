@@ -18,7 +18,8 @@ class ClientLocator extends LocatorConstituent
       channel       = this.locator.locate('message-queue/channel'),
       console       = this.locator.locate('core/console'),
       configuration = this.locator.locate('core/configuration'),
-      factory       = new MessageQueueClientFactory(console, channel),
+      deepmerge     = this.locator.locate('core/deepmerge'),
+      factory       = new MessageQueueClientFactory(console, channel, deepmerge),
       options       = configuration.find('client/message-queue/redis'),
       client        = factory.create(options)
 
