@@ -458,9 +458,7 @@ class MessageQueueClient
 
   composeMessageState(messageLog)
   {
-    const state = {}
-    messageLog.forEach((state, message) => this.deepmerge.merge(state, message.data))
-    return state
+    return this.deepmerge.merge(...messageLog.map((message) => message.data))
   }
 
   composeMessage(message, referer, broadcast)
