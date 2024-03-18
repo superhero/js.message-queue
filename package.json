@@ -1,6 +1,6 @@
 {
   "name": "@superhero/core.message-queue",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A reactive programming model utilizing Redis as a message queue with integrated scheduling capabilities",
   "repository": "git@github.com:superhero/js.message-queue.git",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "@superhero/core.redis": "2.5.9",
+    "@superhero/core.redis": "2.6.0",
     "superhero": "2.13.7"
   },
   "devDependencies": {
