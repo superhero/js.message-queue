@@ -9,7 +9,6 @@ class Channel
   MESSAGE_SCHEDULED         = 'scheduled'
   MESSAGE_SCHEDULED_CLEARED = 'scheduled-cleared'
   MESSAGE_DATA              = 'data'
-  MESSAGE_LOG               = 'log'
 
   messageIndexed(domain, pid)
   {

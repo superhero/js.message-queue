@@ -354,7 +354,14 @@ class MessageQueueClient
   {
     try
     {
-      return await this.redis.hash.delete(this.channel.MESSAGE_DATA, id)
+      const
+        messsage   = await this.readMessage(id),
+        logChannel = this.channel.messageLog(messsage.domain, messsage.pid),
+        idxChannel = this.channel.messageIndexed(messsage.domain, messsage.pid)
+
+      await this.redis.ordered.deleteValue(logChannel, id)
+      await this.redis.ordered.deleteValue(idxChannel, id)
+      await this.redis.hash.delete(this.channel.MESSAGE_DATA, id)
     }
     catch(previousError)
     {
